@@ -124,6 +124,7 @@
     all(aes_armv8, target_arch = "aarch64"),
     feature(stdsimd, aarch64_target_feature)
 )]
+#![feature(target_feature_11)]
 
 #[cfg(feature = "hazmat")]
 pub mod hazmat;

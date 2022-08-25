@@ -135,7 +135,7 @@ macro_rules! define_aes_impl {
                 unsafe {
                     if self.token.get() {
                         #[target_feature(enable = "aes")]
-                        unsafe fn inner(
+                        fn inner(
                             state: &intrinsics::$name,
                             f: impl BlockClosure<BlockSize = U16>,
                         ) {
@@ -154,7 +154,7 @@ macro_rules! define_aes_impl {
                 unsafe {
                     if self.token.get() {
                         #[target_feature(enable = "aes")]
-                        unsafe fn inner(
+                        fn inner(
                             state: &intrinsics::$name,
                             f: impl BlockClosure<BlockSize = U16>,
                         ) {
@@ -254,7 +254,7 @@ macro_rules! define_aes_impl {
                 unsafe {
                     if self.token.get() {
                         #[target_feature(enable = "aes")]
-                        unsafe fn inner(
+                        fn inner(
                             state: &intrinsics::$name_enc,
                             f: impl BlockClosure<BlockSize = U16>,
                         ) {
@@ -383,7 +383,7 @@ macro_rules! define_aes_impl {
                 unsafe {
                     if self.token.get() {
                         #[target_feature(enable = "aes")]
-                        unsafe fn inner(
+                        fn inner(
                             state: &intrinsics::$name_dec,
                             f: impl BlockClosure<BlockSize = U16>,
                         ) {

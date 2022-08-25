@@ -12,7 +12,7 @@ use crate::{Block, Block8};
 
 /// AES cipher (encrypt) round function.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn cipher_round(block: &mut Block, round_key: &Block) {
+pub(crate) fn cipher_round(block: &mut Block, round_key: &Block) {
     // Safety: `loadu` and `storeu` support unaligned access
     let b = _mm_loadu_si128(block.as_ptr() as *const __m128i);
     let k = _mm_loadu_si128(round_key.as_ptr() as *const __m128i);
@@ -22,7 +22,7 @@ pub(crate) unsafe fn cipher_round(block: &mut Block, round_key: &Block) {
 
 /// AES cipher (encrypt) round function: parallel version.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
+pub(crate) fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
     let xmm_keys = load8(round_keys);
     let mut xmm_blocks = load8(blocks);
 
@@ -35,7 +35,7 @@ pub(crate) unsafe fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) 
 
 /// AES cipher (encrypt) round function.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block) {
+pub(crate) fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block) {
     // Safety: `loadu` and `storeu` support unaligned access
     let b = _mm_loadu_si128(block.as_ptr() as *const __m128i);
     let k = _mm_loadu_si128(round_key.as_ptr() as *const __m128i);
@@ -45,7 +45,7 @@ pub(crate) unsafe fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block
 
 /// AES cipher (encrypt) round function: parallel version.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
+pub(crate) fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
     let xmm_keys = load8(round_keys);
     let mut xmm_blocks = load8(blocks);
 
@@ -58,7 +58,7 @@ pub(crate) unsafe fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys:
 
 /// AES mix columns function.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn mix_columns(block: &mut Block) {
+pub(crate) fn mix_columns(block: &mut Block) {
     // Safety: `loadu` and `storeu` support unaligned access
     let mut state = _mm_loadu_si128(block.as_ptr() as *const __m128i);
 
@@ -72,7 +72,7 @@ pub(crate) unsafe fn mix_columns(block: &mut Block) {
 
 /// AES inverse mix columns function.
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn inv_mix_columns(block: &mut Block) {
+pub(crate) fn inv_mix_columns(block: &mut Block) {
     // Safety: `loadu` and `storeu` support unaligned access
     let b = _mm_loadu_si128(block.as_ptr() as *const __m128i);
     let out = _mm_aesimc_si128(b);

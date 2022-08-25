@@ -10,7 +10,7 @@ use core::arch::aarch64::*;
 /// AES cipher (encrypt) round function.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn cipher_round(block: &mut Block, round_key: &Block) {
+pub(crate) fn cipher_round(block: &mut Block, round_key: &Block) {
     let b = vld1q_u8(block.as_ptr());
     let k = vld1q_u8(round_key.as_ptr());
 
@@ -29,7 +29,7 @@ pub(crate) unsafe fn cipher_round(block: &mut Block, round_key: &Block) {
 /// AES cipher (encrypt) round function: parallel version.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
+pub(crate) fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
     for i in 0..8 {
         let mut state = vld1q_u8(blocks[i].as_ptr());
 
@@ -49,7 +49,7 @@ pub(crate) unsafe fn cipher_round_par(blocks: &mut Block8, round_keys: &Block8) 
 /// AES equivalent inverse cipher (decrypt) round function.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block) {
+pub(crate) fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block) {
     let b = vld1q_u8(block.as_ptr());
     let k = vld1q_u8(round_key.as_ptr());
 
@@ -68,7 +68,7 @@ pub(crate) unsafe fn equiv_inv_cipher_round(block: &mut Block, round_key: &Block
 /// AES equivalent inverse cipher (decrypt) round function: parallel version.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
+pub(crate) fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys: &Block8) {
     for i in 0..8 {
         let mut state = vld1q_u8(blocks[i].as_ptr());
 
@@ -88,7 +88,7 @@ pub(crate) unsafe fn equiv_inv_cipher_round_par(blocks: &mut Block8, round_keys:
 /// AES mix columns function.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn mix_columns(block: &mut Block) {
+pub(crate) fn mix_columns(block: &mut Block) {
     let b = vld1q_u8(block.as_ptr());
     let out = vaesmcq_u8(b);
     vst1q_u8(block.as_mut_ptr(), out);
@@ -97,7 +97,7 @@ pub(crate) unsafe fn mix_columns(block: &mut Block) {
 /// AES inverse mix columns function.
 #[allow(clippy::cast_ptr_alignment)]
 #[target_feature(enable = "aes")]
-pub(crate) unsafe fn inv_mix_columns(block: &mut Block) {
+pub(crate) fn inv_mix_columns(block: &mut Block) {
     let b = vld1q_u8(block.as_ptr());
     let out = vaesimcq_u8(b);
     vst1q_u8(block.as_mut_ptr(), out);
